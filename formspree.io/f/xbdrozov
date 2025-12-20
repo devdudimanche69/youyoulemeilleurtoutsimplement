@@ -79,6 +79,7 @@
       color: #4CAF50;
       font-weight: bold;
       margin-top: 20px;
+      font-size: 1.1em;
     }
   </style>
 </head>
@@ -92,16 +93,13 @@
 
   <form id="form" action="https://formspree.io/f/XXXXYYYY" method="POST">
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
-
-    <!-- Champs cachés utiles -->
     <input type="hidden" name="date" id="date">
     <input type="hidden" name="_subject" value="Réponse de Mathou 💌">
-
     <button type="submit">Envoyer</button>
   </form>
 
   <div class="success" id="success">
-    Merci pour ta réponse 💖
+    Merci pour tout Mathilde 🫶
   </div>
 </div>
 
@@ -121,8 +119,8 @@
       headers: { 'Accept': 'application/json' }
     }).then(response => {
       if (response.ok) {
-        form.style.display = "none";
-        success.style.display = "block";
+        form.style.display = "none";      // Masque le formulaire
+        success.style.display = "block";  // Affiche le message automatique
       }
     });
   });
