@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Question du jour</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      overflow: hidden;
+    }
+
+    .bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,111,145,0.4), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(132,94,194,0.4), transparent 40%);
+      z-index: 0;
+    }
+
+    .box {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 35px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 1;
+      animation: appear 0.8s ease;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.95em;
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      resize: none;
+    }
+
+    button {
+      margin-top: 22px;
+      padding: 12px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: #ff6f61;
+      color: white;
+      cursor: pointer;
+    }
+
+    .success {
+      display: none;
+      color: #4CAF50;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="box">
+  <h1>Comment était cette journée Mathou ?</h1>
+  <div class="subtitle">Prends ton temps, j’ai vraiment envie de te lire 💖</div>
+
+  <form id="form" action="https://formspree.io/f/XXXXYYYY" method="POST">
+    <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
+
+    <!-- Champs cachés utiles -->
+    <input type="hidden" name="date" id="date">
+    <input type="hidden" name="_subject" value="Réponse de Mathou 💌">
+
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <div class="success" id="success">
+    Merci pour ta réponse 💖
+  </div>
+</div>
+
+<script>
+  // Date automatique
+  document.getElementById("date").value = new Date().toLocaleString("fr-FR");
+
+  // Envoi sans recharger la page
+  const form = document.getElementById("form");
+  const success = document.getElementById("success");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        form.style.display = "none";
+        success.style.display = "block";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
