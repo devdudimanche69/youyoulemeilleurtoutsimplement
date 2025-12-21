@@ -13,34 +13,16 @@
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      overflow: hidden;
-    }
-
-    .bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,111,145,0.4), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(132,94,194,0.4), transparent 40%);
-      z-index: 0;
     }
 
     .box {
-      position: relative;
-      background: rgba(255, 255, 255, 0.95);
+      background: white;
       padding: 35px;
       border-radius: 16px;
       width: 90%;
       max-width: 500px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       text-align: center;
-      z-index: 1;
-      animation: appear 0.8s ease;
-    }
-
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
@@ -53,18 +35,22 @@
       margin-bottom: 20px;
     }
 
-    textarea {
+    textarea, input[type="file"] {
       width: 100%;
+      margin-top: 12px;
+      font-size: 15px;
+    }
+
+    textarea {
       height: 120px;
       padding: 12px;
       border-radius: 10px;
       border: 1px solid #ccc;
-      font-size: 16px;
       resize: none;
     }
 
     button {
-      margin-top: 22px;
+      margin-top: 20px;
       padding: 12px 30px;
       font-size: 16px;
       border: none;
@@ -76,51 +62,57 @@
 
     .success {
       display: none;
-      color: #4CAF50;
-      font-weight: bold;
       margin-top: 20px;
-      font-size: 1.1em;
+      font-weight: bold;
+      color: #4CAF50;
     }
   </style>
 </head>
 <body>
 
-<div class="bg"></div>
-
 <div class="box">
-  <h1>Comment était cette journée Mathou ?</h1>
-  <div class="subtitle">C'était pas catastrophique ?</div>
+  <h1>Comment était cette journée Mathou !!</h1>
+  <div class="subtitle">
+    une photo souvenir est obligatoire !!!!
+  </div>
 
-  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST">
+  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST" enctype="multipart/form-data">
+    
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
+
+    <!-- Envoi de photo -->
+    <input type="file" name="photo" accept="image/*">
+
+    <!-- Infos utiles -->
     <input type="hidden" name="date" id="date">
-    <input type="hidden" name="_subject" value="Réponse de Mathou">
+    <input type="hidden" name="_subject" value="Message + photo de Mathou 💌">
+
     <button type="submit">Envoyer</button>
   </form>
 
   <div class="success" id="success">
-    Merci pour tout Mathilde 🫶
+    Merci pour tout Mathilde 🫶 (tu peux regarder la lettre :)
   </div>
 </div>
 
 <script>
-  // Date automatique
-  document.getElementById("date").value = new Date().toLocaleString("fr-FR");
+  document.getElementById("date").value =
+    new Date().toLocaleString("fr-FR");
 
-  // Envoi sans recharger la page
   const form = document.getElementById("form");
   const success = document.getElementById("success");
 
   form.addEventListener("submit", function(e) {
     e.preventDefault();
+
     fetch(form.action, {
       method: "POST",
       body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      headers: { "Accept": "application/json" }
     }).then(response => {
       if (response.ok) {
-        form.style.display = "none";      // Masque le formulaire
-        success.style.display = "block";  // Affiche le message automatique
+        form.style.display = "none";
+        success.style.display = "block";
       }
     });
   });
