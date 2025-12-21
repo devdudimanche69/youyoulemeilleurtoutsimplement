@@ -16,13 +16,23 @@
     }
 
     .box {
-      background: white;
+      background: rgba(255,255,255,0.95);
       padding: 35px;
       border-radius: 16px;
       width: 90%;
       max-width: 500px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.95em;
+      opacity: 0.8;
+      margin-bottom: 20px;
     }
 
     textarea {
@@ -46,6 +56,10 @@
       font-size: 14px;
     }
 
+    .photo-btn:hover {
+      background: #6f4bb8;
+    }
+
     input[type="file"] {
       display: none;
     }
@@ -58,6 +72,7 @@
     .preview img {
       max-width: 100%;
       border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     button {
@@ -70,44 +85,74 @@
       color: white;
       cursor: pointer;
     }
+
+    .success {
+      display: none;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #4CAF50;
+      font-size: 1.1em;
+    }
   </style>
 </head>
 <body>
 
 <div class="box">
-  <h2>Comment était cette journée Mathou !</h2>
+  <h1>Comment était cette journée Mathou ?</h1>
+  <div class="subtitle">PHOTO SOUVENIR OBLIGATOIRE !</div>
 
-  <!-- IMPORTANT : pas de JS pour l'envoi -->
-  <form action="https://formspree.io/f/xbdrozov"
-        method="POST"
-        enctype="multipart/form-data">
-
+  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST" enctype="multipart/form-data" target="_blank">
+    
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
 
-    <label class="photo-btn" for="photo">Ajouter une photo 📸</label>
-    <input id="photo" type="file" name="photo" accept="image/*">
+    <!-- Bouton personnalisé pour ajouter photo -->
+    <label class="photo-btn" for="photoInput">Ajouter une photo 📸</label>
+    <input type="file" id="photoInput" name="photo" accept="image/*">
 
+    <!-- Aperçu de la photo -->
     <div class="preview" id="preview">
-      <img id="previewImg">
+      <img id="previewImg" alt="Aperçu de la photo">
     </div>
 
+    <!-- Date automatique -->
+    <input type="hidden" name="date" id="date">
+
+    <!-- Sujet mail personnalisé -->
     <input type="hidden" name="_subject" value="Message + photo de Mathou 💌">
 
     <button type="submit">Envoyer</button>
   </form>
+
+  <div class="success" id="success">Merci pour tout Mathilde 🫶, tu peux lire la lettre maintenant :)</div>
 </div>
 
 <script>
-  // Aperçu image (OK sans bloquer l’envoi)
-  const input = document.getElementById("photo");
-  const preview = document.getElementById("preview");
-  const img = document.getElementById("previewImg");
+  // Date automatique
+  document.getElementById("date").value = new Date().toLocaleString("fr-FR");
 
-  input.addEventListener("change", () => {
-    if (input.files[0]) {
-      img.src = URL.createObjectURL(input.files[0]);
+  // Aperçu photo
+  const photoInput = document.getElementById("photoInput");
+  const preview = document.getElementById("preview");
+  const previewImg = document.getElementById("previewImg");
+
+  photoInput.addEventListener("change", () => {
+    const file = photoInput.files[0];
+    if(file){
+      previewImg.src = URL.createObjectURL(file);
       preview.style.display = "block";
     }
+  });
+
+  // Envoi avec Formspree + message de confirmation
+  const form = document.getElementById("form");
+  const success = document.getElementById("success");
+
+  form.addEventListener("submit", (e) => {
+    // On ne bloque pas le submit pour permettre l'envoi normal avec image
+    setTimeout(() => {
+      form.style.display = "none";
+      success.style.display = "block";
+    }, 100);
   });
 </script>
 
