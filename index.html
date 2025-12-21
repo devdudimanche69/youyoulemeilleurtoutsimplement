@@ -1,125 +1,132 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Question du jour</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    }
+<meta charset="UTF-8">
+<title>Question du jour</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    overflow: hidden;
+  }
 
-    .box {
-      background: rgba(255,255,255,0.95);
-      padding: 35px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      text-align: center;
-    }
+  /* Formes floues animées */
+  .bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.5;
+    animation: float 20s infinite alternate ease-in-out;
+  }
 
-    h1 {
-      margin-bottom: 10px;
-    }
+  .shape1 { width: 300px; height: 300px; background: #ff6f91; top: -100px; left: -100px; }
+  .shape2 { width: 400px; height: 400px; background: #ffc75f; bottom: -150px; right: -150px; animation-delay: 3s; }
+  .shape3 { width: 250px; height: 250px; background: #845ec2; top: 50%; right: -100px; animation-delay: 6s; }
 
-    .subtitle {
-      font-size: 0.95em;
-      opacity: 0.8;
-      margin-bottom: 20px;
-    }
+  @keyframes float {
+    from { transform: translateY(0) translateX(0); }
+    to { transform: translateY(-40px) translateX(30px); }
+  }
 
-    textarea {
-      width: 100%;
-      height: 120px;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      resize: none;
-      font-size: 15px;
-    }
+  .box {
+    position: relative;
+    background: rgba(255,255,255,0.95);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 1;
+    animation: appear 1s ease;
+  }
 
-    .photo-btn {
-      margin-top: 15px;
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 20px;
-      background: #845ec2;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-    }
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    .photo-btn:hover {
-      background: #6f4bb8;
-    }
+  h1 {
+    margin-bottom: 15px;
+    font-size: 1.8em;
+    color: #333;
+  }
 
-    input[type="file"] {
-      display: none;
-    }
+  .subtitle {
+    font-size: 0.95em;
+    opacity: 0.8;
+    margin-bottom: 25px;
+  }
 
-    .preview {
-      margin-top: 15px;
-      display: none;
-    }
+  textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    resize: none;
+  }
 
-    .preview img {
-      max-width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
+  button {
+    margin-top: 20px;
+    padding: 14px 35px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    background: #ff6f61;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      font-size: 16px;
-      border: none;
-      border-radius: 30px;
-      background: #ff6f61;
-      color: white;
-      cursor: pointer;
-    }
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
 
-    .success {
-      display: none;
-      margin-top: 20px;
-      font-weight: bold;
-      color: #4CAF50;
-      font-size: 1.1em;
-    }
-  </style>
+  .success {
+    display: none;
+    margin-top: 25px;
+    font-weight: bold;
+    color: #4CAF50;
+    font-size: 1.2em;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  @media (max-width: 600px) {
+    .box { padding: 30px; }
+    h1 { font-size: 1.5em; }
+    textarea { height: 100px; }
+  }
+</style>
 </head>
 <body>
 
+<!-- Formes décoratives -->
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
+<div class="bg-shape shape3"></div>
+
 <div class="box">
   <h1>Comment était cette journée Mathou ?</h1>
-  <div class="subtitle">PHOTO SOUVENIR OBLIGATOIRE !</div>
+  <div class="subtitle">J'ai pas fait n'importe quoi ?</div>
 
-  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST" enctype="multipart/form-data" target="_blank">
-    
+  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST" target="_blank">
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
-
-    <!-- Bouton personnalisé pour ajouter photo -->
-    <label class="photo-btn" for="photoInput">Ajouter une photo 📸</label>
-    <input type="file" id="photoInput" name="photo" accept="image/*">
-
-    <!-- Aperçu de la photo -->
-    <div class="preview" id="preview">
-      <img id="previewImg" alt="Aperçu de la photo">
-    </div>
-
-    <!-- Date automatique -->
     <input type="hidden" name="date" id="date">
-
-    <!-- Sujet mail personnalisé -->
-    <input type="hidden" name="_subject" value="Message + photo de Mathou 💌">
-
+    <input type="hidden" name="_subject" value="Réponse de Mathou 💌">
     <button type="submit">Envoyer</button>
   </form>
 
@@ -130,25 +137,11 @@
   // Date automatique
   document.getElementById("date").value = new Date().toLocaleString("fr-FR");
 
-  // Aperçu photo
-  const photoInput = document.getElementById("photoInput");
-  const preview = document.getElementById("preview");
-  const previewImg = document.getElementById("previewImg");
-
-  photoInput.addEventListener("change", () => {
-    const file = photoInput.files[0];
-    if(file){
-      previewImg.src = URL.createObjectURL(file);
-      preview.style.display = "block";
-    }
-  });
-
-  // Envoi avec Formspree + message de confirmation
+  // Message de confirmation après envoi
   const form = document.getElementById("form");
   const success = document.getElementById("success");
 
-  form.addEventListener("submit", (e) => {
-    // On ne bloque pas le submit pour permettre l'envoi normal avec image
+  form.addEventListener("submit", function() {
     setTimeout(() => {
       form.style.display = "none";
       success.style.display = "block";
