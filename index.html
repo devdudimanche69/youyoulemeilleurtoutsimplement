@@ -114,38 +114,46 @@
 </head>
 <body>
 
-<!-- Formes décoratives -->
 <div class="bg-shape shape1"></div>
 <div class="bg-shape shape2"></div>
 <div class="bg-shape shape3"></div>
 
 <div class="box">
   <h1>Comment était cette journée Mathou ?</h1>
-  <div class="subtitle">J'ai pas fait n'importe quoi ?</div>
+  <div class="subtitle">j'ai pas fait n'importe quoi quand meme ?</div>
 
-  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST" target="_blank">
+  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST">
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
     <input type="hidden" name="date" id="date">
     <input type="hidden" name="_subject" value="Réponse de Mathou 💌">
     <button type="submit">Envoyer</button>
   </form>
 
-  <div class="success" id="success">Merci pour tout Mathilde 🫶, tu peux lire la lettre maintenant :)</div>
+  <div class="success" id="success">Merci pour tout Mathilde 🫶, tu peux lire la lettre maintenant !</div>
 </div>
 
 <script>
   // Date automatique
   document.getElementById("date").value = new Date().toLocaleString("fr-FR");
 
-  // Message de confirmation après envoi
   const form = document.getElementById("form");
   const success = document.getElementById("success");
 
-  form.addEventListener("submit", function() {
-    setTimeout(() => {
-      form.style.display = "none";
-      success.style.display = "block";
-    }, 100);
+  form.addEventListener("submit", function(e){
+    e.preventDefault(); // empêche redirection
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { "Accept": "application/json" }
+    }).then(response => {
+      if (response.ok){
+        form.style.display = "none";
+        success.style.display = "block";
+      } else {
+        alert("Une erreur est survenue, réessaye.");
+      }
+    }).catch(() => alert("Une erreur est survenue, réessaye."));
   });
 </script>
 
