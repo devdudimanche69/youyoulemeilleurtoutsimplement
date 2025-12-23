@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ================== BASE ================== */
 * {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -15,26 +14,58 @@
 body {
   margin: 0;
   min-height: 100vh;
+  color: white;
   transition: background 1.2s ease;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* ================== PAGE AVANT ================== */
 body.before {
-  background: linear-gradient(135deg, #ffd6e8, #fff1f5);
+  background: linear-gradient(180deg, #ff9a9e 0%, #ffb3c6 45%, #ffd6a5 75%, #ffe8cc 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* Soleil couchant */
+.sunset {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff7d6, #ffd166 45%, #ff9f1c 70%);
+  box-shadow:
+    0 0 40px rgba(255, 209, 102, 0.8),
+    0 0 120px rgba(255, 159, 28, 0.6);
+  z-index: 0;
+}
+
+/* Lueur/horizon */
+.haze {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(255,214,165,0.6), rgba(255,214,165,0.0));
+  z-index: 0;
 }
 
 .card {
-  background: rgba(255,255,255,0.95);
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
   padding: 45px;
   border-radius: 25px;
   width: 90%;
   max-width: 520px;
   text-align: center;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
   animation: appear 1s ease;
 }
 
@@ -46,12 +77,11 @@ body.before {
 h1 {
   font-size: 1.9em;
   margin-bottom: 10px;
-  color: #333;
 }
 
 .subtitle {
   font-size: 0.95em;
-  color: #777;
+  opacity: 0.9;
   margin-bottom: 30px;
 }
 
@@ -60,9 +90,14 @@ textarea {
   height: 130px;
   padding: 16px;
   border-radius: 14px;
-  border: 1px solid #ddd;
+  border: none;
   font-size: 16px;
   resize: none;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: #eee;
 }
 
 .challenges {
@@ -91,7 +126,7 @@ button {
   border: none;
   border-radius: 30px;
   font-size: 16px;
-  background: linear-gradient(135deg, #ff8fab, #ff5d8f);
+  background: linear-gradient(135deg, #ff7a18, #ff3d81);
   color: white;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -99,7 +134,7 @@ button {
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
 }
 
 /* ================== PAGE APRES ================== */
@@ -112,7 +147,6 @@ body.after {
 
 .after-container {
   text-align: center;
-  color: white;
   animation: fadeIn 1.8s ease forwards;
 }
 
@@ -121,23 +155,10 @@ body.after {
   to { opacity: 1; transform: scale(1); }
 }
 
-.after-container h1 {
-  font-size: 2.2em;
-  margin-bottom: 15px;
-}
-
-.after-container p {
-  font-size: 1.1em;
-  opacity: 0.9;
-}
-
 /* étoiles */
 .stars {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
 }
 
@@ -155,7 +176,6 @@ body.after {
   50% { opacity: 1; }
 }
 
-/* ================== UTIL ================== */
 .hidden {
   display: none;
 }
@@ -164,30 +184,30 @@ body.after {
 
 <body class="before">
 
-<!-- ⭐ étoiles (après envoi) -->
+<!-- Soleil + horizon -->
+<div class="sunset"></div>
+<div class="haze"></div>
+
+<!-- étoiles (page après) -->
 <div class="stars hidden" id="stars"></div>
 
-<!-- 🌸 PAGE AVANT -->
 <div class="card" id="beforePage">
-  <h1>Comment était cette journée Mathou !!</h1>
-  <div class="subtitle">COCHES LES DÉFIS RÉUSSIS</div>
+  <h1>Comment était cette journée Mathou ?</h1>
+  <div class="subtitle">COCHES LES DÉFIS RÉUSSIS!!</div>
 
-  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST">
+  <form id="form" action="https://formspree.io/f/XXXXYYYY" method="POST">
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
 
     <div class="challenges">
       <h2>Défis du jour</h2>
-
       <div class="challenge">
         <input type="checkbox" name="couleur">
         <label>🎨 Choisir une couleur et la chercher partout</label>
       </div>
-
       <div class="challenge">
         <input type="checkbox" name="vlog">
         <label>🎬 Transformer la journée en film</label>
       </div>
-
       <div class="challenge">
         <input type="checkbox" name="details">
         <label>📝 Noter les détails chez l’autre</label>
@@ -195,49 +215,45 @@ body.after {
     </div>
 
     <input type="hidden" name="date" id="date">
-    <input type="hidden" name="_subject" value="Une journée partagée 💌">
+    <input type="hidden" name="_subject" value="Une journée partagée 🤍">
 
     <button type="submit">Envoyer</button>
   </form>
 </div>
 
-<!-- 🌙 PAGE APRES -->
 <div class="after-container hidden" id="afterPage">
-  <h1>Merci pour tout Mathilde 🫶, tu peux lire la lettre mtn :) </h1>
-  <p>J'espere que cette journée t'auras plu <br>mais la soirée elle est loin de se finir !>êp>
+  <h1>Merci pour tout Mathilde 🫶, tu peux lire la lettre mtn :)</h1>
+  <p>Le jour se termine.<br>La soirée va faire que commencer mtn !</p>
 </div>
 
 <script>
-/* date */
 document.getElementById("date").value = new Date().toLocaleString("fr-FR");
 
 /* étoiles */
 const stars = document.getElementById("stars");
-for(let i = 0; i < 80; i++){
+for(let i = 0; i < 90; i++){
   const s = document.createElement("div");
   s.className = "star";
-  s.style.top = Math.random() * 100 + "%";
-  s.style.left = Math.random() * 100 + "%";
-  s.style.animationDelay = Math.random() * 3 + "s";
+  s.style.top = Math.random()*100 + "%";
+  s.style.left = Math.random()*100 + "%";
+  s.style.animationDelay = Math.random()*3 + "s";
   stars.appendChild(s);
 }
 
-/* submit */
+/* envoi */
 const form = document.getElementById("form");
-
 form.addEventListener("submit", function(e){
   e.preventDefault();
-
   fetch(form.action, {
     method: "POST",
     body: new FormData(form),
     headers: { "Accept": "application/json" }
   }).then(res => {
     if(res.ok){
-      document.body.classList.remove("before");
-      document.body.classList.add("after");
-
+      document.body.className = "after";
       document.getElementById("beforePage").classList.add("hidden");
+      document.querySelector(".sunset").style.display = "none";
+      document.querySelector(".haze").style.display = "none";
       document.getElementById("afterPage").classList.remove("hidden");
       stars.classList.remove("hidden");
     } else {
