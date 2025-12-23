@@ -28,12 +28,11 @@ body.before {
   position: relative;
 }
 
-/* Soleil couchant */
+/* Soleil couchant - haut à gauche */
 .sunset {
   position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 10%;
+  left: 10%;
   width: 220px;
   height: 220px;
   border-radius: 50%;
@@ -44,7 +43,7 @@ body.before {
   z-index: 0;
 }
 
-/* Lueur/horizon */
+/* Horizon / lueur */
 .haze {
   position: absolute;
   bottom: 0;
@@ -192,10 +191,10 @@ body.after {
 <div class="stars hidden" id="stars"></div>
 
 <div class="card" id="beforePage">
-  <h1>Comment était cette journée Mathou ?</h1>
-  <div class="subtitle">COCHES LES DÉFIS RÉUSSIS!!</div>
+  <h1>Comment était cette journée Mathou !</h1>
+  <div class="subtitle">COCHES LES DÉFIS RÉUSSIS</div>
 
-  <form id="form" action="https://formspree.io/f/XXXXYYYY" method="POST">
+  <form id="form" action="https://formspree.io/f/xbdrozov" method="POST">
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
 
     <div class="challenges">
@@ -222,8 +221,8 @@ body.after {
 </div>
 
 <div class="after-container hidden" id="afterPage">
-  <h1>Merci pour tout Mathilde 🫶, tu peux lire la lettre mtn :)</h1>
-  <p>Le jour se termine.<br>La soirée va faire que commencer mtn !</p>
+  <h1>Merci pour tout Mathilde 🫶</h1>
+  <p>Avant de se préparer pour le nouvel an,<br>lis la lettre :)</p>
 </div>
 
 <script>
