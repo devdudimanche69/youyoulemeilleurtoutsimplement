@@ -16,7 +16,6 @@
     overflow: hidden;
   }
 
-  /* Formes floues animées */
   .bg-shape {
     position: absolute;
     border-radius: 50%;
@@ -30,8 +29,8 @@
   .shape3 { width: 250px; height: 250px; background: #845ec2; top: 50%; right: -100px; animation-delay: 6s; }
 
   @keyframes float {
-    from { transform: translateY(0) translateX(0); }
-    to { transform: translateY(-40px) translateX(30px); }
+    from { transform: translate(0,0); }
+    to { transform: translate(30px,-40px); }
   }
 
   .box {
@@ -40,22 +39,15 @@
     padding: 40px;
     border-radius: 20px;
     width: 90%;
-    max-width: 500px;
+    max-width: 520px;
     box-shadow: 0 25px 50px rgba(0,0,0,0.2);
     text-align: center;
     z-index: 1;
-    animation: appear 1s ease;
-  }
-
-  @keyframes appear {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   h1 {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-size: 1.8em;
-    color: #333;
   }
 
   .subtitle {
@@ -74,8 +66,35 @@
     resize: none;
   }
 
+  .challenges {
+    margin-top: 25px;
+    text-align: left;
+  }
+
+  .challenges h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .challenge {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 10px;
+  }
+
+  .challenge input {
+    transform: scale(1.3);
+    margin-top: 3px;
+  }
+
+  .challenge label {
+    font-size: 0.95em;
+    line-height: 1.3;
+  }
+
   button {
-    margin-top: 20px;
+    margin-top: 25px;
     padding: 14px 35px;
     font-size: 16px;
     border: none;
@@ -83,12 +102,11 @@
     background: #ff6f61;
     color: white;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   button:hover {
-    transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
   }
 
   .success {
@@ -97,18 +115,6 @@
     font-weight: bold;
     color: #4CAF50;
     font-size: 1.2em;
-    animation: fadeIn 1s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px);}
-    to { opacity: 1; transform: translateY(0);}
-  }
-
-  @media (max-width: 600px) {
-    .box { padding: 30px; }
-    h1 { font-size: 1.5em; }
-    textarea { height: 100px; }
   }
 </style>
 </head>
@@ -119,41 +125,63 @@
 <div class="bg-shape shape3"></div>
 
 <div class="box">
-  <h1>Comment était cette journée Mathou ?</h1>
-  <div class="subtitle">j'ai pas fait n'importe quoi quand meme ?</div>
+  <h1>Comment était cette journée Mathou !! Et les défis réussis ?</h1>
+  <div class="subtitle">Un message + les petits défis du jour 💌</div>
 
   <form id="form" action="https://formspree.io/f/xbdrozov" method="POST">
+
     <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
+
+    <div class="challenges">
+      <h2>Défis du jour</h2>
+
+      <div class="challenge">
+        <input type="checkbox" name="defi_couleur">
+        <label>🎨 Choisir une couleur et prendre le plus de photos possibles où elle apparaît</label>
+      </div>
+
+      <div class="challenge">
+        <input type="checkbox" name="defi_vlog">
+        <label>🎬 Faire de la journée un film / vlog</label>
+      </div>
+
+      <div class="challenge">
+        <input type="checkbox" name="defi_details">
+        <label>📝 Faire une liste de détails remarqués chez l'autre au cours de la journée</label>
+      </div>
+    </div>
+
     <input type="hidden" name="date" id="date">
-    <input type="hidden" name="_subject" value="Réponse de Mathou 💌">
+    <input type="hidden" name="_subject" value="Journée + défis de Mathou 💌">
+
     <button type="submit">Envoyer</button>
   </form>
 
-  <div class="success" id="success">Merci pour tout Mathilde 🫶, tu peux lire la lettre maintenant !</div>
+  <div class="success" id="success">Merci pour tout Mathilde 🫶, tu peux lire la lettre maintenant :) </div>
 </div>
 
 <script>
-  // Date automatique
   document.getElementById("date").value = new Date().toLocaleString("fr-FR");
 
   const form = document.getElementById("form");
   const success = document.getElementById("success");
 
   form.addEventListener("submit", function(e){
-    e.preventDefault(); // empêche redirection
+    e.preventDefault();
     const data = new FormData(form);
+
     fetch(form.action, {
       method: "POST",
       body: data,
       headers: { "Accept": "application/json" }
-    }).then(response => {
-      if (response.ok){
+    }).then(res => {
+      if(res.ok){
         form.style.display = "none";
         success.style.display = "block";
       } else {
-        alert("Une erreur est survenue, réessaye.");
+        alert("Erreur lors de l’envoi 😕");
       }
-    }).catch(() => alert("Une erreur est survenue, réessaye."));
+    }).catch(() => alert("Erreur réseau 😕"));
   });
 </script>
 
