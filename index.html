@@ -21,74 +21,85 @@ body {
 
 /* ================== PAGE AVANT ================== */
 body.before {
-  background: linear-gradient(180deg, #ff9a9e 0%, #ffb3c6 45%, #ffd6a5 75%, #ffe8cc 100%);
+  background: linear-gradient(180deg, #ff9a9e 0%, #ffb3c6 40%, #ffd6a5 70%, #ffe8cc 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-/* Soleil couchant - haut à gauche */
+/* Décors doux */
+.cloud {
+  position: absolute;
+  width: 280px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent 70%);
+  border-radius: 50%;
+  filter: blur(30px);
+}
+
+.cloud.one { top: 15%; right: 15%; }
+.cloud.two { bottom: 25%; left: 12%; }
+
+.lines {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04) 0px,
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+  pointer-events: none;
+}
+
+/* Soleil */
 .sunset {
   position: absolute;
-  top: 10%;
-  left: 10%;
+  top: 8%;
+  left: 8%;
   width: 220px;
   height: 220px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #fff7d6, #ffd166 45%, #ff9f1c 70%);
   box-shadow:
-    0 0 40px rgba(255, 209, 102, 0.8),
-    0 0 120px rgba(255, 159, 28, 0.6);
-  z-index: 0;
+    0 0 50px rgba(255, 209, 102, 0.8),
+    0 0 160px rgba(255, 159, 28, 0.6);
 }
 
-/* Horizon / lueur */
-.haze {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 45%;
-  background: linear-gradient(to top, rgba(255,214,165,0.6), rgba(255,214,165,0.0));
-  z-index: 0;
-}
-
+/* Carte */
 .card {
   position: relative;
-  z-index: 1;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-  padding: 45px;
-  border-radius: 25px;
-  width: 90%;
-  max-width: 520px;
-  text-align: center;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
-  animation: appear 1s ease;
+  z-index: 2;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+  padding: 48px;
+  border-radius: 30px;
+  width: 92%;
+  max-width: 560px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
-@keyframes appear {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Typo */
 h1 {
-  font-size: 1.9em;
-  margin-bottom: 10px;
+  font-size: 2em;
+  margin-bottom: 8px;
 }
 
 .subtitle {
-  font-size: 0.95em;
+  font-size: 1em;
   opacity: 0.9;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
+/* Champs */
 textarea {
   width: 100%;
-  height: 130px;
-  padding: 16px;
-  border-radius: 14px;
+  height: 140px;
+  padding: 18px;
+  border-radius: 18px;
   border: none;
   font-size: 16px;
   resize: none;
@@ -96,44 +107,50 @@ textarea {
 }
 
 textarea::placeholder {
-  color: #eee;
+  color: #f1f1f1;
 }
 
-.challenges {
-  margin-top: 25px;
-  text-align: left;
+/* Séparateur */
+.divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent);
+  margin: 28px 0;
 }
 
+/* Défis */
 .challenges h2 {
-  font-size: 1.15em;
-  margin-bottom: 10px;
+  font-size: 1.25em;
+  margin-bottom: 14px;
 }
 
 .challenge {
   display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 0.98em;
 }
 
 .challenge input {
-  transform: scale(1.3);
+  transform: scale(1.4);
 }
 
+/* Bouton */
 button {
-  margin-top: 30px;
-  padding: 15px 40px;
+  margin-top: 34px;
+  padding: 16px 44px;
   border: none;
-  border-radius: 30px;
-  font-size: 16px;
+  border-radius: 40px;
+  font-size: 17px;
   background: linear-gradient(135deg, #ff7a18, #ff3d81);
   color: white;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 12px 30px rgba(255,61,129,0.4);
 }
 
 button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+  transform: translateY(-2px);
 }
 
 /* ================== PAGE APRES ================== */
@@ -146,11 +163,11 @@ body.after {
 
 .after-container {
   text-align: center;
-  animation: fadeIn 1.8s ease forwards;
+  animation: fadeIn 2s ease forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
+  from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -175,41 +192,50 @@ body.after {
   50% { opacity: 1; }
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 </style>
 </head>
 
 <body class="before">
 
-<!-- Soleil + horizon -->
+<!-- Décors -->
 <div class="sunset"></div>
-<div class="haze"></div>
+<div class="cloud one"></div>
+<div class="cloud two"></div>
+<div class="lines"></div>
 
-<!-- étoiles (page après) -->
 <div class="stars hidden" id="stars"></div>
 
 <div class="card" id="beforePage">
-  <h1>Comment était cette journée Mathou !</h1>
-  <div class="subtitle">COCHES LES DÉFIS RÉUSSIS</div>
+  <h1>Comment était cette journée Mathou ?</h1>
+  <div class="subtitle">COCHES LES DÉFIS RÉUSSIS !</div>
 
   <form id="form" action="https://formspree.io/f/xbdrozov" method="POST">
-    <textarea name="message" placeholder="Écris ta réponse ici..." required></textarea>
+    <textarea name="message" placeholder="Écris ici ce que tu veux garder de cette journée…" required></textarea>
+
+    <div class="divider"></div>
 
     <div class="challenges">
       <h2>Défis du jour</h2>
+
       <div class="challenge">
-        <input type="checkbox" name="couleur">
-        <label>🎨 Choisir une couleur et la chercher partout</label>
+        <input type="checkbox" name="farine_game">
+        <label>🥖 Farine game</label>
       </div>
+
       <div class="challenge">
-        <input type="checkbox" name="vlog">
-        <label>🎬 Transformer la journée en film</label>
+        <input type="checkbox" name="color_chase">
+        <label>🎨 Color chase</label>
       </div>
+
       <div class="challenge">
-        <input type="checkbox" name="details">
-        <label>📝 Noter les détails chez l’autre</label>
+        <input type="checkbox" name="jeu_details">
+        <label>🔍 Jeu des détails</label>
+      </div>
+
+      <div class="challenge">
+        <input type="checkbox" name="mot_a_placer">
+        <label>📝 Mot à placer</label>
       </div>
     </div>
 
@@ -222,15 +248,14 @@ body.after {
 
 <div class="after-container hidden" id="afterPage">
   <h1>Merci pour tout Mathilde 🫶</h1>
-  <p>Avant de se préparer pour le nouvel an,<br>lis la lettre :)</p>
+  <p>j'espere que tout ça t'auras plus,<br>j'ai un petit truc pour toi maintenant !</p>
 </div>
 
 <script>
 document.getElementById("date").value = new Date().toLocaleString("fr-FR");
 
-/* étoiles */
 const stars = document.getElementById("stars");
-for(let i = 0; i < 90; i++){
+for(let i = 0; i < 100; i++){
   const s = document.createElement("div");
   s.className = "star";
   s.style.top = Math.random()*100 + "%";
@@ -239,9 +264,8 @@ for(let i = 0; i < 90; i++){
   stars.appendChild(s);
 }
 
-/* envoi */
 const form = document.getElementById("form");
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", e => {
   e.preventDefault();
   fetch(form.action, {
     method: "POST",
@@ -251,12 +275,8 @@ form.addEventListener("submit", function(e){
     if(res.ok){
       document.body.className = "after";
       document.getElementById("beforePage").classList.add("hidden");
-      document.querySelector(".sunset").style.display = "none";
-      document.querySelector(".haze").style.display = "none";
       document.getElementById("afterPage").classList.remove("hidden");
       stars.classList.remove("hidden");
-    } else {
-      alert("Erreur lors de l’envoi");
     }
   });
 });
